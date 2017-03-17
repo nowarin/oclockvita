@@ -93,16 +93,9 @@ int checkButtons(int port, tai_hook_ref_t ref_hook, SceCtrlData *ctrl, int count
       old_buttons = ctrl->buttons;
       ctrl->buttons = 0;
        
-     }else{
+     } else {
        
        if ((ctrl->buttons & SCE_CTRL_SELECT) && (ctrl->buttons & SCE_CTRL_UP)){         
-         if(mode==-1){
-            profile_game[0] = scePowerGetArmClockFrequency();
-          	profile_game[1] = scePowerGetBusClockFrequency();
-          	profile_game[2] = scePowerGetGpuClockFrequency();
-          	profile_game[3] = scePowerGetGpuXbarClockFrequency();
-            mode=0;
-         }
          showMenu = 1;
        }
        
@@ -217,6 +210,19 @@ int module_start(SceSize argc, const void *args) {
                                       TAI_ANY_LIBRARY,
                                       0xA7739DBE, // scePowerSetGpuXbarClockFrequency
                                       power_patched4);
+
+  if(mode == -1) {
+       profile_game[0] = scePowerGetArmClockFrequency();
+       profile_game[1] = scePowerGetBusClockFrequency();
+       profile_game[2] = scePowerGetGpuClockFrequency();
+       profile_game[3] = scePowerGetGpuXbarClockFrequency();
+       mode = 2;
+  }
+
+  scePowerSetArmClockFrequency(profiles[mode][0]);
+  scePowerSetBusClockFrequency(profiles[mode][1]);
+  scePowerSetGpuClockFrequency(profiles[mode][2]);
+  scePowerSetGpuXbarClockFrequency(profiles[mode][3]);
 
   return SCE_KERNEL_START_SUCCESS;
 }
