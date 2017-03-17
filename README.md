@@ -1,3 +1,5 @@
+A quick mod of Oclock Vita that defaults to maximum performance, useful for Vita TV/PS TV where there is no real downside in doing so. Hopefully settings are added to the original Oclock which obsolete the need for this, but for now it is good enough.
+
 # Oclock Vita
 taiHEN plugin for overclocking your PSVita
 
